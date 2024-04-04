@@ -424,7 +424,7 @@ def calc_mse(y_pred, y):
         mean squared error of the model
     """
 
-    residuals, _ = self.calc_residuals(y_pred, y)
+    residuals, _ = calc_residuals(y_pred, y)
     mse = np.mean(residuals**2)
 
     return mse
