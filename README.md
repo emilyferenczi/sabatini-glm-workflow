@@ -55,6 +55,9 @@ conda activate sglm
 pip install -r requirements.txt
 ```
 
+You can also use the Google Colab to run through this pipeline.
+Please visit our [Google Colab Notebook](https://githubtocolab.com/jbwallace123/sabatini-glm-workflow/blob/main/notebooks/colab_grid_search_tutorial.ipynb) to get started.
+
 ## Troubleshooting:
 
 * This is a work in progress and will be updated as needed. Please feel free to reach out with any questions or concerns.
