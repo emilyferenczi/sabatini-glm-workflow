@@ -429,7 +429,7 @@ def calc_mse(y_pred, y):
 
     return mse
 
-def leave_one_out_cross_val(config, X_train, X_test, y_train, y_test):
+def leave_one_out_cross_val(config, X_train, X_test, y_train, y_test, plot: Optional[bool] = False):
     """
     Will run selected model by leaving one predictor out at a time.
     Will return the model with the best score
@@ -445,9 +445,20 @@ def leave_one_out_cross_val(config, X_train, X_test, y_train, y_test):
             X_train_temp = X_train[predictors_temp]
             X_test_temp = X_test[predictors_temp]
             model, y_pred, score, beta, intercept = fit_glm(config, X_train_temp, X_test_temp, y_train, y_test)
-            print(f'Predictor left out: {predictor}, Score: {score}, adding to model list...')
+            #calculate train score
+            #fetch regression type and score metric from config
+            regression_type = config['glm_params']['regression_type'].lower()
+            score_metric = config['glm_params']['glm_keyword_args'][regression_type]['score_metric']
+            y_train_pred = model.predict(X_train_temp)
+            if score_metric == 'r2':
+                train_score = model.score(X_train_temp, y_train)
+            elif score_metric == 'mse':
+                train_score = calc_mse(y_train, y_train_pred)
+
+            print(f'Predictor left out: {predictor}, Test Score: {score}, Train Score: {train_score}. Adding to model list...')
             model_list.append({'predictors': predictors_temp,
-                                'model': model, 'score': score, 
+                                'model': model, 'test_score': score,
+                                'train_score': train_score, 
                                 'beta': beta, 'intercept': intercept, 
                                 'predictor_left_out': predictor})
             
@@ -467,27 +478,41 @@ def leave_one_out_cross_val(config, X_train, X_test, y_train, y_test):
             X_train_temp = X_train[:, mask]
             X_test_temp = X_test[:, mask]
             model, y_pred, score, beta, intercept = fit_glm(config, X_train_temp, X_test_temp, y_train, y_test)
-            print(f'Predictor left out: {predictor}, Score: {score}, adding to model list...')
+            #calculate train score
+            #fetch regression type and score metric from config
+            regression_type = config['glm_params']['regression_type'].lower()
+            score_metric = config['glm_params']['glm_keyword_args'][regression_type]['score_metric']
+            y_train_pred = model.predict(X_train_temp)
+            if score_metric == 'r2':
+                train_score = model.score(X_train_temp, y_train)
+            elif score_metric == 'mse':
+                train_score = calc_mse(y_train, y_train_pred)
+
+            print(f'Predictor left out: {predictor}, Test Score: {score}, Train Score: {train_score}. Adding to model list...')
             model_list.append({'predictors': predictors_temp,
-                                'model': model, 'score': score, 
+                                'model': model, 'test_score': score,
+                                'train_score': train_score, 
                                 'beta': beta, 'intercept': intercept, 
                                 'predictor_left_out': predictor})
             
-    #plot scores for each model
-    import matplotlib.pyplot as plt
-    import seaborn as sns
-    # Create the bar plot
-    scores = [model['score'] for model in model_list]
-    predictors = [model['predictor_left_out'] for model in model_list]
-    fig, ax = plt.subplots(figsize=(10, 6))  # Adjusted figsize for better visualization
-    colors = sns.color_palette('colorblind')
-    ax.bar(predictors, scores, color=colors[0])  # Using predictors and scores for bar plot
-    ax.set_xlabel('Predictor Left Out')
-    ax.set_ylabel('Score')
-    ax.set_title('Leave One Out Cross Validation')
-    ax.grid(True)
-    plt.xticks(rotation=45)
-    plt.show()
+    if plot == True:
+        #plot scores for each model
+        import matplotlib.pyplot as plt
+        import seaborn as sns
+        # Create the bar plot
+        scores = [model['score'] for model in model_list]
+        predictors = [model['predictor_left_out'] for model in model_list]
+        fig, ax = plt.subplots(figsize=(10, 6))  # Adjusted figsize for better visualization
+        colors = sns.color_palette('colorblind')
+        ax.bar(predictors, scores, color=colors[0])  # Using predictors and scores for bar plot
+        ax.set_xlabel('Predictor Left Out')
+        ax.set_ylabel('Score')
+        ax.set_title('Leave One Out Cross Validation')
+        ax.grid(True)
+        plt.xticks(rotation=45)
+        plt.show()
+    else:
+        pass
 
     return model_list
 
