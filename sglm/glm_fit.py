@@ -510,7 +510,10 @@ def leave_one_out_cross_val(config, X_train, X_test, y_train, y_test, plot: Opti
         ax.set_title('Leave One Out Cross Validation')
         ax.grid(True)
         plt.xticks(rotation=45)
+        plt.savefig(config['Project']['project_path'] + '/results/leave1out.png')
+        plt.savefig(config['Project']['project_path'] + '/results/leave1out.pdf')
         plt.show()
+        plt.close()
     else:
         pass
 
@@ -567,5 +570,6 @@ def plot_and_save(config, y_pred, y_test, beta, df_predictors_shift):
         ax.set_ylim(tup_y_lim)
     fig.suptitle('GLM Coefficients Fit Results')
     plt.savefig(config['Project']['project_path'] + '/results/model_fit.png')
+    plt.savefig(config['Project']['project_path'] + '/results/model_fit.pdf')
     plt.close()
 
