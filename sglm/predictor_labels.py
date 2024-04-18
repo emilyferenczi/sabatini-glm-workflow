@@ -160,7 +160,8 @@ def predictor_labels(df):
     #unique_trial_numbers
     #print(len(unique_trial_numbers))
     
-    
+    #this is the updated data frame now with all the behavioral events of interest included.
     return (df_source)
+    
 
 
