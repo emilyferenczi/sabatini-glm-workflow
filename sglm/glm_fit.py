@@ -500,7 +500,7 @@ def leave_one_out_cross_val(config, X_train, X_test, y_train, y_test, plot: Opti
         import matplotlib.pyplot as plt
         import seaborn as sns
         # Create the bar plot
-        scores = [model['score'] for model in model_list]
+        scores = [model['test_score'] for model in model_list]
         predictors = [model['predictor_left_out'] for model in model_list]
         fig, ax = plt.subplots(figsize=(10, 6))  # Adjusted figsize for better visualization
         colors = sns.color_palette('colorblind')
