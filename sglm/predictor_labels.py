@@ -47,7 +47,7 @@ def predictor_labels(df):
         max_value_for_trial = max_row['lick']
         max_timestamp_for_trial = max_row['Timestamp']
         session_name_for_trial = max_row['SessionName']
-        result_rows.append({'TrialNumber': trial_number, 'sum_last_lick': max_value_for_trial, 'Timestamp':       max_timestamp_for_trial, 'SessionName': session_name_for_trial})
+        result_rows.append({'TrialNumber': trial_number, 'sum_last_lick': max_value_for_trial, 'Timestamp': max_timestamp_for_trial, 'SessionName': session_name_for_trial})
 
     # Convert the list of dictionaries to a DataFrame
     result_df = pd.DataFrame(result_rows)

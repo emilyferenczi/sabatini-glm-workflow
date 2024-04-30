@@ -41,17 +41,41 @@ glm_params:
   - missReward
   - freeReward
   predictors_shift_bounds:
-    predictor1:
-    - -2
-    - 2
-    predictor2:
-    - -2
-    - 2
-    predictor3:
-    - -2
-    - 2
+    freeReward:
+    - -50
+    - 50
+    go:
+    - 0
+    - 100
+    last_lick:
+    - -20
+    - 50
+    lick_1:
+    - -3
+    - 50
+    lick_2:
+    - -5
+    - 50
+    lick_3:
+    - -7
+    - 50
+    lick_3C:
+    - -7
+    - 50
+    lick_3R:
+    - -7
+    - 50
+    lick_non1-3:
+    - -20
+    - 50
+    missReward:
+    - -50
+    - 50
+    nogo:
+    - 0
+    - 100
   predictors_shift_bounds_default:
-  - -50
+  - 0
   - 100
   regression_type: ElasticNet
   response: photometryLhemi
