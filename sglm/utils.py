@@ -109,7 +109,7 @@ def create_config(project_name, project_dir):
                                 'score_metric': 'r2', #options: 'r2', 'mse', 'avg'
                                 'cv': 5, #number of cross validation folds
                                 'n_alphas': 100, #number of alphas to test
-                                'n_jobs': -1, #number of jobs to run in parallel
+                                'n_jobs': -2, #number of jobs to run in parallel
                                 },
                             'ridge': {
                                 'alpha': 0.5,
@@ -295,7 +295,7 @@ def plot_aligned_dataStream(dataStream, config, save=False, save_path=None, reco
 
         # Pad each waveform to the maximum length
         for waveform in dataStream[predictor]:
-            padded_waveform = np.pad(waveform, (0, max_length - len(waveform)), mode='constant', constant_values=np.nan) #delete constant_values to go back to zeros
+            padded_waveform = np.pad(waveform, (0, max_length - len(waveform)), mode='constant') #delete constant_values to go back to zeros #constant_values=np.nan
             padded_waveforms.append(padded_waveform)
 
         # Compute the average waveform
@@ -338,7 +338,7 @@ def plot_actual_v_reconstructed(config, dataStream, recon_dataStream, save=False
 
         # Pad each waveform to the maximum length
         for waveform in dataStream[predictor]:
-            padded_waveform = np.pad(waveform, (0, max_length - len(waveform)), mode='constant', constant_values=np.nan) #delete constant_values to go back to zeros
+            padded_waveform = np.pad(waveform, (0, max_length - len(waveform)), mode='constant') #delete constant_values to go back to zeros #constant_values=np.nan
             padded_waveforms.append(padded_waveform)
 
         for recon_waveform in recon_dataStream[predictor]:

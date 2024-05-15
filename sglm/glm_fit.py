@@ -126,6 +126,7 @@ def shift_predictors(config, df_source, sparsify: Optional[bool] = False):
         predictor_shifted = shift_series_range(
             df_source[predictor],
             predictor_shift_bounds,
+            fill_value=0, #Changed to 0 instead of NaN on 5/1/24
             shift_bounding_column=['SessionName']
         )
         list_predictors_shifted.append(predictor_shifted)
